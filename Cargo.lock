@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "read-values"
+name = "numerical-integration-rs"
 version = "0.1.0"
