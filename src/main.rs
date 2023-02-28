@@ -14,15 +14,31 @@ fn read_number<T: FromStr>(description: &str) -> Result<T, io::Error> {
     }
 }
 
+fn apply_fx(x: f64, c0: f64, c1: f64, c2: f64) -> f64 {
+    c0 + c1 * x + c2 * x * x
+}
+
+fn calculate_area(n: i32, lower_bound: f64, upper_bound: f64, c0: f64, c1: f64, c2: f64) -> f64 {
+    let dx = (upper_bound - lower_bound) / n as f64;
+    let mut area = (apply_fx(lower_bound, c0, c1, c2) + apply_fx(upper_bound, c0, c1, c2)) * 0.5;
+
+    let mut x = lower_bound;
+    for _ in 1..n {
+        x += dx;
+        area += apply_fx(x, c0, c1, c2);
+    }
+
+    area * dx
+}
+
 fn main() -> Result<(), io::Error> {
-    println!("Numerical Integarion in Rust - v0.1");
+    println!("Numerical Integarion in Rust - v0.2");
 
     println!("Enter the integration parameters");
 
     let n = read_number::<i32>("Number of iterations:")?;
     let lower_bound = read_number::<f64>("Lower bound:")?;
     let upper_bound = read_number::<f64>("Upper bound:")?;
-    let dx = (upper_bound - lower_bound) / n as f64;
 
     println!("Enter the paramters of the quadratic function (f(x) = c0 + c1*x + c2*x²)");
 
@@ -31,23 +47,14 @@ fn main() -> Result<(), io::Error> {
     let c2 = read_number::<f64>("c2:")?;
 
     println!(
-        "n = {}, lower = {}, upper = {}, dx = {}",
-        n, lower_bound, upper_bound, dx
+        "n = {}, lower = {}, upper = {}",
+        n, lower_bound, upper_bound
     );
     println!("f(x) = {} + {}*x + {}*x²", c0, c1, c2);
 
-    let mut x = lower_bound;
-    let mut area = (c0 + c1 * x + c2 * x * x) * 0.5;
-
-    for _ in 1..n {
-        x += dx;
-        area += c0 + c1 * x + c2 * x * x;
-    }
-
-    x = upper_bound;
-    area += (c0 + c1 * x + c2 * x * x) * 0.5;
-    area *= dx;
+    let area = calculate_area(n, lower_bound, upper_bound, c0, c1, c2);
 
     println!("Area = {}", area);
     Ok(())
 }
+
