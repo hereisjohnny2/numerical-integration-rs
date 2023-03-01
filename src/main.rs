@@ -1,7 +1,6 @@
 use std::io;
-mod functions;
-mod integrals;
-mod utils;
+
+use numerical_integration_rs::{utils, functions::f2g, integrals::trapezoid};
 
 fn main() -> Result<(), io::Error> {
     println!("Enter the integration parameters");
@@ -20,8 +19,8 @@ fn main() -> Result<(), io::Error> {
     );
     println!("f(x) = {} + {}*x + {}*x²", c0, c1, c2);
 
-    let f2g = functions::F2G::new(c0, c1, c2);
-    let trapezoid = integrals::IntTrapezoid::new(lower_bound, upper_bound, n);
+    let f2g = f2g::F2G::new(c0, c1, c2);
+    let trapezoid = trapezoid::IntTrapezoid::new(lower_bound, upper_bound, n);
     let area = trapezoid.area(&f2g);
 
     println!("Area = {}", area);

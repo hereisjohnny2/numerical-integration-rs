@@ -1,5 +1,4 @@
 use std::{io, str::FromStr};
-
 pub fn read_number<T: FromStr>(description: &str) -> Result<T, io::Error> {
     println!("{description}");
     let mut input = String::new();
@@ -13,4 +12,3 @@ pub fn read_number<T: FromStr>(description: &str) -> Result<T, io::Error> {
         )),
     }
 }
-
