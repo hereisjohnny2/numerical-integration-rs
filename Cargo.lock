@@ -3,5 +3,12 @@
 version = 3
 
 [[package]]
-name = "numerical-integration-rs"
+name = "cli"
+version = "0.1.0"
+dependencies = [
+ "numerical_integration_core",
+]
+
+[[package]]
+name = "numerical_integration_core"
 version = "0.1.0"

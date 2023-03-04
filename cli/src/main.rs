@@ -1,6 +1,6 @@
 use std::io;
 
-use numerical_integration_rs::{utils, functions::f2g, integrals::trapezoid};
+use numerical_integration_core::{utils, functions::f2g, integrals::trapezoid};
 
 fn main() -> Result<(), io::Error> {
     println!("Enter the integration parameters");
