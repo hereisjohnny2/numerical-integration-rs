@@ -1,4 +1,4 @@
-use crate::functions::f2g;
+use crate::functions::function;
 
 pub struct IntTrapezoid {
     lower_bound: f64,
@@ -15,14 +15,14 @@ impl IntTrapezoid {
         }
     }
 
-    pub fn area(&self, f2g: &f2g::F2G) -> f64 {
+    pub fn area(&self, func: &dyn function::Function) -> f64 {
         let dx = (self.upper_bound - self.lower_bound) / self.n as f64;
-        let mut area = (f2g.f(self.lower_bound) + f2g.f(self.upper_bound)) * 0.5;
+        let mut area = (func.f(self.lower_bound) + func.f(self.upper_bound)) * 0.5;
 
         let mut x = self.lower_bound;
         for _ in 1..self.n {
             x += dx;
-            area += f2g.f(x);
+            area += func.f(x);
         }
 
         area * dx
