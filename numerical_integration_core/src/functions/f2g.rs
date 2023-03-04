@@ -13,3 +13,20 @@ impl F2G {
         self.c0 + self.c1 * x + self.c2 * x * x
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn should_create_2g_polynomial() {
+        let f2g = F2G::new(1.0, 2.0, 3.0);
+        let expected_result_0 = 1.0;
+        let expected_result_1 = 1.0 + 2.0 + 3.0;
+        let expected_result_3 = 1.0 + 2.0 * 3.0 + 3.0 * 3.0 * 3.0;
+
+        assert_eq!(f2g.f(0.0), expected_result_0);
+        assert_eq!(f2g.f(1.0), expected_result_1);
+        assert_eq!(f2g.f(3.0), expected_result_3);
+    }
+}
