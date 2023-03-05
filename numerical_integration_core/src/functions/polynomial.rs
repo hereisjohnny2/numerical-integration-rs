@@ -22,8 +22,10 @@ impl Polynomial {
     pub fn degree(&self) -> usize {
         self.degree
     }
+}
 
-    pub fn expr(&self) -> String {
+impl ToString for Polynomial {
+    fn to_string(&self) -> String {
         let mut expression = String::from(format!("f(x) = {}", self.coefficients.get(0).unwrap()));
         for i in 1..self.degree {
             let coeff = self.coefficients.get(i).unwrap();
@@ -86,25 +88,25 @@ mod tests {
     }
 
     #[test]
-    fn should_get_expression() {
+    fn should_get_to_stringession() {
         let coefficients_0 = vec![1.0];
         let poly_0 = Polynomial::new(coefficients_0);
         let expected_0 = "f(x) = 1";
-        let result_0 = poly_0.expr();
+        let result_0 = poly_0.to_string();
 
         assert_eq!(expected_0, result_0);
 
         let coefficients_1 = vec![1.0, 2.0];
         let poly_1 = Polynomial::new(coefficients_1);
         let expected_1 = "f(x) = 1 + 2 * x";
-        let result_1 = poly_1.expr();
+        let result_1 = poly_1.to_string();
 
         assert_eq!(expected_1, result_1);
 
         let coefficients_4 = vec![1.0, 2.0, 3.0, 4.0];
         let poly_4 = Polynomial::new(coefficients_4);
         let expected_4 = "f(x) = 1 + 2 * x + 3 * x^2 + 4 * x^3";
-        let result_4 = poly_4.expr();
+        let result_4 = poly_4.to_string();
 
         assert_eq!(expected_4, result_4);
     }

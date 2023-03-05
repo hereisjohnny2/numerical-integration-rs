@@ -1,9 +1,6 @@
 use std::io;
 
-use numerical_integration_core::{
-    integrals::trapezoid,
-    utils, functions::polynomial::Polynomial,
-};
+use numerical_integration_core::{functions::polynomial::Polynomial, integrals::trapezoid, utils};
 
 fn main() -> Result<(), io::Error> {
     println!("Enter the integration parameters");
@@ -23,7 +20,7 @@ fn main() -> Result<(), io::Error> {
 
     let coefficients = vec![c0, c1, c2];
     let poly_2 = Polynomial::new(coefficients);
-    println!("{}", poly_2.expr());
+    println!("{}", poly_2.to_string());
 
     let trapezoid = trapezoid::IntTrapezoid::new(lower_bound, upper_bound, n);
     let area = trapezoid.area(&poly_2);
