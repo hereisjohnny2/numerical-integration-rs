@@ -1,6 +1,9 @@
 use std::io;
 
-use numerical_integration_core::{utils, functions::f2g, integrals::trapezoid};
+use numerical_integration_core::{
+    integrals::trapezoid,
+    utils, functions::polynomial::Polynomial,
+};
 
 fn main() -> Result<(), io::Error> {
     println!("Enter the integration parameters");
@@ -17,12 +20,15 @@ fn main() -> Result<(), io::Error> {
         "n = {}, lower = {}, upper = {}",
         n, lower_bound, upper_bound
     );
-    println!("f(x) = {} + {}*x + {}*x²", c0, c1, c2);
 
-    let f2g = f2g::F2G::new(c0, c1, c2);
+    let coefficients = vec![c0, c1, c2];
+    let poly_2 = Polynomial::new(coefficients);
+    println!("{}", poly_2.expr());
+
     let trapezoid = trapezoid::IntTrapezoid::new(lower_bound, upper_bound, n);
-    let area = trapezoid.area(&f2g);
+    let area = trapezoid.area(&poly_2);
 
     println!("Area = {}", area);
+
     Ok(())
 }
