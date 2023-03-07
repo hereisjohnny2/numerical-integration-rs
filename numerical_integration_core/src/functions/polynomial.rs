@@ -49,13 +49,14 @@ impl ToString for Polynomial {
 
 impl Function for Polynomial {
     fn f(&self, x: f64) -> f64 {
-        let mut output = 0.0;
-
-        for i in 0..self.degree {
-            output += self.coefficients.get(i).unwrap() * x.powi(i as i32);
-        }
-
-        output
+        match self.coefficients
+            .clone()
+            .into_iter()
+            .enumerate()
+            .reduce(|acc, c| (c.0, acc.1 + c.1 * x.powi(c.0 as i32))) {
+                Some(n) => n.1,
+                None => 0.0
+            }
     }
 }
 
